@@ -13,7 +13,12 @@ import { Drawer as MUIDrawer,
     IconButton,
     Typography,
     Divider,
-    Button
+    Button,
+    Dialog,
+    DialogActions, 
+    DialogContent, 
+    DialogContentText, 
+    DialogTitle 
 } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -21,7 +26,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import clsx from 'clsx';
 import { RouteComponentProps, withRouter, Switch, Route } from "react-router-dom";
-import { DataTable } from '../../components';
+import { DataTable, DroneForm } from '../../components'; 
 
 
 const drawerWidth = 240;
@@ -104,6 +109,15 @@ export const Dashboard = withRouter(( props:DashProps ) => {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = useState(false);
+    const [dialogOpen, setDialogOpen] = useState(false);
+
+    const handleDialogClickOpen = () => {
+      setDialogOpen(true);
+    }
+  
+    const handleDialogClickClose = () => {
+      setDialogOpen(false);
+    }
   
     const handleDrawerOpen = () => {
       setOpen(true);
@@ -146,7 +160,21 @@ export const Dashboard = withRouter(( props:DashProps ) => {
             <Typography variant="h6" noWrap>
               Dashboard
             </Typography>
-            <Button className={classes.toolbar_button}>Create New Drone</Button>
+
+            {/* Dialog Pop Up Button */}
+            <Button className={classes.toolbar_button} onClick={handleDialogClickOpen}>Create New Drone</Button>
+                {/*Dialog Pop Up begin */}
+              <Dialog open={dialogOpen} onClose={handleDialogClickClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Add New Drone</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>Place Your Drone Info Here</DialogContentText>
+                    <DroneForm />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick = {handleDialogClickClose} color = "primary">Cancel</Button>
+                </DialogActions>
+              </Dialog>
+
           </Toolbar>
         </AppBar>
         <MUIDrawer
