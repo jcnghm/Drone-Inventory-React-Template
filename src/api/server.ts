@@ -34,7 +34,7 @@ export const server_calls = {
         return await response.json()
     },
     update: async (id:string, data:any = {}) => {
-        const response = await fetch(`https://drone-inventory-jcnghm.herokuapp.com/api/drones${id}`, {
+        const response = await fetch(`https://drone-inventory-jcnghm.herokuapp.com/api/drones/${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export const server_calls = {
         });
     },
     delete: async(id:string) => {
-        const response = await fetch(`https://drone-inventory-jcnghm.herokuapp.com/api/drones${id}`,{
+        const response = await fetch(`https://drone-inventory-jcnghm.herokuapp.com/api/drones/${id}`,{
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
