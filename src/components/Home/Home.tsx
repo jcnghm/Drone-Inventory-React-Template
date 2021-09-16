@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 import drone_image from '../../assets/images/sample_drone_image.jpg';
 
 import { Link } from 'react-router-dom';
+import { AuthCheck } from 'reactfire'; // New Import
+import { Suspense } from 'react';
 
 interface Props{
     title: string;
@@ -42,7 +44,7 @@ const useStyles = makeStyles({
         color: 'black'
     },
     main: {
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${drone_image});`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url(${drone_image});`,
         width: '100%',
         height: '100%',
         backgroundSize: 'cover',
@@ -77,12 +79,21 @@ export const Home = ( props:Props) => {
                         <li>
                             <Link to="/" className={classes.nav_a}>Home</Link>
                         </li>
-                        <li>
-                            <Link to="/dashboard" className={classes.nav_a}>Dashboard</Link>
-                        </li>
-                        <li>
-                            <Link to="/signin" className={classes.nav_a}>Sign In</Link>
-                        </li>
+                        <Suspense fallback={'loading...'}>
+                            <AuthCheck fallback={
+                            <li>
+                                <Link to="/signin" className={classes.nav_a}>Sign In</Link>
+                            </li>
+                            }>
+                        
+                            <li>
+                                <Link to="/dashboard" className={classes.nav_a}>Dashboard</Link>
+                            </li>
+                            <li>
+                                <Link to="/signin" className={classes.nav_a}>Sign Out</Link>
+                            </li>
+                            </AuthCheck>
+						</Suspense>
                     </ul>
                 </div>
             </nav>
@@ -92,7 +103,7 @@ export const Home = ( props:Props) => {
                 <div className={classes.main_text}>
                     <h1>{ props.title }</h1>
                     <p>I like drones</p>
-                    <Button color='primary' variant="contained">Click Me</Button>
+                    <Button color='primary' variant="contained">View Dashboard</Button>
                 </div>
             </main>
         </div>
